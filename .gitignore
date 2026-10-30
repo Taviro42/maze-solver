@@ -1,0 +1,65 @@
+# ---------- .NET build output ----------
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Ll]og/
+[Ll]ogs/
+TestResults/
+*.trx
+*.coverage
+coverage*.xml
+coverage*.json
+
+# ---------- NuGet ----------
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ---------- IDE: Rider / Visual Studio / VS Code ----------
+.idea/
+*.sln.iml
+*.DotSettings.user
+*.user
+*.suo
+*.userprefs
+.vs/
+.vscode/
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+*~
+
+# ---------- AI ----------
+# Claude Code
+CLAUDE.md
+CLAUDE.local.md
+**/CLAUDE.md
+**/CLAUDE.local.md
+.claude/
+**/.claude/
+.claude-sessions/
+claude-sessions/
+.mcp.json
+# Other AI tools
+AGENTS.md
+GEMINI.md
+.cursor/
+.cursorrules
+.cursorignore
+.windsurf/
+.windsurfrules
+.aider*
+.continue/
+.codeium/
+.copilot/
+.github/copilot-instructions.md
+.junie/
+.aiassistant/
+.idea/**/aiAssistant*
+.idea/**/copilot*
