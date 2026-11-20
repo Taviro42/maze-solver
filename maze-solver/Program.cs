@@ -6,6 +6,8 @@ namespace MazeSolver
     {
         /// <summary>
         ///     Reads a text file, expecting a Maze in it and returning it in a 2D-Array.
+        ///     The outer walls are removed, so the returned array is 2 smaller in each dimension than the file
+        ///     and position (0,0) is the first cell inside the border.
         ///     Syntax:
         ///         # -> Wall
         ///         . -> Floor
@@ -13,7 +15,7 @@ namespace MazeSolver
         ///         E -> End
         /// </summary>
         /// <param name="path">Path to file of the input file</param>
-        /// <returns>Maze from the text file as 2D-Array</returns>
+        /// <returns>Maze from the text file as 2D-Array, without the outer walls</returns>
         public static char[,] ReadMazeFile(string path)
         {
             if (!Path.Exists(path))
@@ -22,13 +24,21 @@ namespace MazeSolver
             }
 
             string[] fileLines = File.ReadAllLines(path);
-            char[,] outputArray = new char[fileLines.Length,fileLines[0].Length];
 
-            for (int i = 0; i < fileLines.Length; i++)
+            if (fileLines.Length < 3 || fileLines[0].Length < 3)
             {
-                for (int j = 0; j < fileLines[0].Length; j++)
+                throw new ArgumentException("Maze must be at least 3x3 (walls around at least one cell).", nameof(path));
+            }
+
+            int rows = fileLines.Length - 2;
+            int cols = fileLines[0].Length - 2;
+            char[,] outputArray = new char[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
                 {
-                    outputArray[i, j] = fileLines[i][j];
+                    outputArray[i, j] = fileLines[i + 1][j + 1];
                 }
             }
 
@@ -41,7 +51,7 @@ namespace MazeSolver
         /// </summary>
         /// <param name="maze">2D-Array of the maze</param>
         /// <param name="target">The char that is searched for</param>
-        /// <returns>Tuple with position of found target, (-1,-1) if not found.</returns>
+        /// <returns>Tuple with position of found target, null if not found.</returns>
         public static Tuple<int, int>? FindChar(char[,] maze, char target)
         {
             int rows = maze.GetLength(0);
